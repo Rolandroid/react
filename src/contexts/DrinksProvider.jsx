@@ -36,9 +36,14 @@ const DrinksProvider = ({ children }) => {
     async function getDrink(data) {
         try {
             setLoading(true);
-
             const drinksData = await filterDrinksService(data.name, data.category);
-            setDrinks(drinksData);
+            const drinksWithPrice = drinksData.map((drink) => {
+                return{
+                    ...drink,
+                    price: Math.floor(Math.random() * 101),
+                }
+            })
+            setDrinks(drinksWithPrice);
         } catch (error) {
             console.error(error);
         } finally {

@@ -16,17 +16,32 @@ export default function DrinkCard({ drink }) {
 
                 <Card.Body>
                     <Card.Title>{drink.strDrink}</Card.Title>
+                    <Card.Subtitle>{drink.price}</Card.Subtitle>
+                    <Col>
 
-                    <Button
-                        variant="warning"
-                        className="w-100 text-uppercase mt-2"
-                        onClick={() => {
-                            handleModalClick();
-                            handleDrinkIdClick(drink.idDrink);
-                        }}
-                    >
-                        Ver Receta
-                    </Button>
+
+                        <Button
+                            variant="warning"
+                            className="w-100 text-uppercase mt-2"
+                            onClick={() => {
+                                handleModalClick();
+                                handleDrinkIdClick(drink.idDrink);
+                            }}
+                        >
+                            Ver Receta
+                        </Button>
+                    
+                    
+
+
+                        <Button
+                            variant="primary"
+                            className="w-100 text-uppercase mt-2"
+                            onClick={() => {}}
+                        >
+                            Agrergar al carrito
+                        </Button>
+                    </Col>
                 </Card.Body>
             </Card>
         </Col>
@@ -38,5 +53,6 @@ DrinkCard.propTypes = {
         strDrinkThumb: PropTypes.string.isRequired,
         strDrink: PropTypes.string.isRequired,
         idDrink: PropTypes.string.isRequired,
+        price: PropTypes.number.isRequired
     }).isRequired,
 };
