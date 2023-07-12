@@ -4,3 +4,5 @@
 -Eliminar producto del carrito
 -Finalizar compra
 
+- agregar cuantity al producto
+- determinar si el objeto ya esta adentro de la lista para decicir dsi agrefgar uno al quantity o aagregar uno al carrito
