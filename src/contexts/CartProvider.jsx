@@ -16,31 +16,28 @@ const actionTypes = {
 
 function cartReducer (state, { type, payload }) {
     const {idDrink, quantity} = payload
-
+    
     let drinkIsInCart = state.cartItems.find((item) => item.idDrink === idDrink)
-    switch (type) {
+    switch (type) { 
         case actionTypes.ADD_TO_CART:
-            if(drinkIsInCart){
+
+            if(drinkIsInCart){        
                 
-                state.cartitems.forEach(item=>{
+                
+                state.cartItems.forEach(item=>{
                     if(item.idDrink === idDrink){
                         item.quantity = item.quantity + 1;
                     }
                 })
-
-                return state 
-            }else{
+                return state
+            }else{ 
                 payload.quantity = 1
-                
                 return{
                     ...state,
                     cartItems:[...state.cartItems, payload]
                 }
-
             }
-            /* checkear si el producto esta en el carrito
-            
-            si) agregar cantidad mas 1
+            /* si) agregar cantidad mas 1
             no) agregar el producto con cantidad 1 */
         drink.quantity = 1
             return{
