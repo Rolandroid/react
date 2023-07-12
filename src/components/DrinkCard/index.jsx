@@ -1,9 +1,16 @@
 import { Col, Card, Button } from "react-bootstrap";
 import { useDrinks } from "../../hooks/useDrinks";
 import PropTypes from "prop-types";
+import { useCart } from "../../hooks/useCart"
 
 export default function DrinkCard({ drink }) {
     const { handleModalClick, handleDrinkIdClick } = useDrinks();
+    const {addToCart} = useCart()
+
+    function handleAddToCart (drink){
+        addToCart(drink)
+    }
+
 
     return (
         <Col md={6} lg={3}>
@@ -37,7 +44,7 @@ export default function DrinkCard({ drink }) {
                         <Button
                             variant="primary"
                             className="w-100 text-uppercase mt-2"
-                            onClick={() => {}}
+                            onClick={() => handleAddToCart(drink)}
                         >
                             Agrergar al carrito
                         </Button>

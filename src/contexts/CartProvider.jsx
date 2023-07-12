@@ -77,7 +77,7 @@ function CartProvider ({children}){
     )
 }
 
-CartProvider.poropTypes = {
+CartProvider.propTypes = {
     children: PropTypes.node.isRequired
 }
 export {CartContext, CartProvider}
