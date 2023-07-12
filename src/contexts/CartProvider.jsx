@@ -4,66 +4,113 @@ import PropTypes from "prop-types"
 const CartContext = createContext()
 
 const cartInitialState = {
-    cartItems:[],
+    cartItems: [],
 }
 
 const actionTypes = {
-    ADD_TO_CART:"ADD_TO_CART",
+    ADD_TO_CART: "ADD_TO_CART",
     REMOVE_FROM_CART: "REMOVE_FROM_CART",
-    REMOVE_ONE_FROM_CART:"REMOVE_ONE_FROM_CART",
-    CLEAR_CART:"CLEAR_CART"
+    REMOVE_ONE_FROM_CART: "REMOVE_ONE_FROM_CART",
+    REMOVE_ALL_FROM_CART: "REMOVE_ALL_FROM_CART",
+    CLEAR_CART: "CLEAR_CART"
 }
 
-function cartReducer (state, { type, payload }) {
-    const {idDrink, quantity} = payload
-    
-    let drinkIsInCart = state.cartItems.find((item) => item.idDrink === idDrink)
-    switch (type) { 
+function cartReducer(state, { type, payload }) {
+    const { idDrink } = payload
+
+    let drinkInCart = state.cartItems.find((item) => item.idDrink === idDrink)
+    switch (type) {
         case actionTypes.ADD_TO_CART:
 
-            if(drinkIsInCart){        
-                
-                
-                state.cartItems.forEach(item=>{
-                    if(item.idDrink === idDrink){
-                        item.quantity = item.quantity + 1;
+            if (drinkInCart) {
+
+                let cartItemsUpdated = state.cartItems.map(item => {
+                    if (item.idDrink === idDrink) {
+                        return {
+                            ...item,
+                            quantity: item.quantity + 1
+                        }
                     }
+                    return item
                 })
-                return state
-            }else{ 
-                payload.quantity = 1
-                return{
+
+                return {
                     ...state,
-                    cartItems:[...state.cartItems, payload]
+                    cartItems: cartItemsUpdated
+                }
+            } else {
+
+                payload.quantity = 1
+                return {
+                    ...state,
+                    cartItems: [...state.cartItems, payload]
                 }
             }
-            /* si) agregar cantidad mas 1
-            no) agregar el producto con cantidad 1 */
-        drink.quantity = 1
-            return{
-                ...state, 
-                cartItems: [...state.cartItems, drink]
-            };  
-    }
- }
+        case actionTypes.REMOVE_ONE_FROM_CART:
 
-function CartProvider ({children}){
-    const [state, dispatch] = useReducer(cartReducer, cartInitialState )
+            if (drinkInCart.quantity > 1) {
+                let cartItemsUpdated = state.cartItems.map(item => {
+                    if (item.idDrink === idDrink) {
+                        return {
+                            ...item,
+                            quantity: item.quantity - 1
+                        }
+                    }
+                    return item
+                });
 
-    function addToCart (drink){
-        dispatch({type:actionTypes.ADD_TO_CART, payload: drink})
+                return {
+                    ...state,
+                    cartItems: cartItemsUpdated
+                }
+            } else {
+                let cartItemsUpdated = state.cartItems.filter(item => !item.idDrink === idDrink); 
+
+                return {
+                    ...state,
+                    cartItems: cartItemsUpdated
+                }
+            }
+        case actionTypes.REMOVE_ALL_FROM_CART:
+            if (drinkInCart) {
+                let cartItemsUpdated = state.cartItems.filter(
+                    (item) => !item.idDrink === idDrink
+                    );
+                return {
+                    ...state,
+                    cartItems: cartItemsUpdated
+                }
+            }
+            return state;
+        case actionTypes.CLEAR_CART:
+            return {
+                ...state,
+                cartItems: []
+            }
     }
-    function removeFromCart (){
+}
+
+function CartProvider({ children }) {
+    const [state, dispatch] = useReducer(cartReducer, cartInitialState)
+
+    function addToCart(drink) {
+        dispatch({ type: actionTypes.ADD_TO_CART, payload: drink })
     }
-    function removeAllFromCart(){
+    function removeOneFromCart(idDrink) {
+        dispatch({ type: actionTypes.REMOVE_ONE_FROM_CART, payload: { idDrink } })
     }
-    function clearCart(){
+    function removeAllFromCart() {
+        dispatch({ type: actionTypes.REMOVE_ALL_FROM_CART, payload: { idDrink } })
+
+    }
+    function clearCart() {
+        dispatch({type:actionTypes.CLEAR_CART })
     }
 
     const cartValues = {
-        cart : state,
+        cart: state,
         addToCart,
-        removeFromCart,
+        removeOneFromCart,
         removeAllFromCart,
         clearCart
     }
@@ -77,4 +124,4 @@ function CartProvider ({children}){
 CartProvider.propTypes = {
     children: PropTypes.node.isRequired
 }
-export {CartContext, CartProvider}
+export { CartContext, CartProvider }
