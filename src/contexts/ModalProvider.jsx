@@ -7,7 +7,6 @@ function ModalProvider({ children }) {
     const [isOpen, setIsOpen] = useState(false);
 
     function toogleModal() {
-        console.log("toogleModal invocacion modalProvider 10")
         setIsOpen(!isOpen);
     }
 
