@@ -13,7 +13,7 @@ function App() {
       <CartProvider>
         <MainLayout>
           <DrinksProvider>
-            <CategoriesProvider>
+             <CategoriesProvider>
               <AppRoutes />
             </CategoriesProvider>
           </DrinksProvider>

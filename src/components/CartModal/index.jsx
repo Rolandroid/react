@@ -1,14 +1,12 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrashCan, faXmark, faXmarkCircle } from "@fortawesome/free-solid-svg-icons"
 import style from "./CartModal.module.css"
-import useModal from "../../hooks/useModal"
+import useModal from "../../hooks/useModal";
 
 
 export default function CartModal() {
-    const {isOpen, toogleModal} = useModal()
-    console.log(isOpen + "Hola que hace")
-    
-    return (
+        const { isOpen, toogleModal } = useModal()
+    if(isOpen) return (
         <div className={style.modalBg}>
             <div className={style.modal}>
                 <FontAwesomeIcon icon={faXmarkCircle} onClick={toogleModal} className={style.icon}></FontAwesomeIcon>

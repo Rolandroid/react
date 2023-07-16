@@ -9,7 +9,7 @@ export default function Header() {
   return (
     <header className={`py-5 ${styles.header}`}>
       <h1>Buscador de Bebidas</h1>
-      <FontAwesomeIcon icon={faCartShopping} onclick={toogleModal}></FontAwesomeIcon>
+      <FontAwesomeIcon icon={faCartShopping} onClick={toogleModal}></FontAwesomeIcon>
     </header>
   );
 }
