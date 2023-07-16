@@ -10,7 +10,8 @@ export default function MainLayout({ children }) {
     <div className={styles.main}>
       <Header />
       <Container className="mt-5">{children}</Container>
-      <CartModal></CartModal>
+      <CartModal>        
+      </CartModal>
       <Footer />
     </div>
   );

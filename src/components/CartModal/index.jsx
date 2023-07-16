@@ -3,12 +3,15 @@ import { faTrashCan, faXmark, faXmarkCircle } from "@fortawesome/free-solid-svg-
 import style from "./CartModal.module.css"
 import useModal from "../../hooks/useModal"
 
+
 export default function CartModal() {
-    const {isOpen, toogleModal} = useModal
+    const {isOpen, toogleModal} = useModal()
+    console.log(isOpen + "Hola que hace")
+    
     return (
         <div className={style.modalBg}>
             <div className={style.modal}>
-                <FontAwesomeIcon icon={faXmarkCircle} className={style.icon}></FontAwesomeIcon>
+                <FontAwesomeIcon icon={faXmarkCircle} onClick={toogleModal} className={style.icon}></FontAwesomeIcon>
                 <h2>Mi carrito</h2>
                 <section className={style.modalBody}>
                     <div className={style.modalDrinksListContainer}>
