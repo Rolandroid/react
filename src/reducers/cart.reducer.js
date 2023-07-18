@@ -67,7 +67,7 @@ export function cartReducer(state, { type, payload = {} }) {
         case actionTypes.REMOVE_ALL_FROM_CART:
             if (drinkInCart) {
                 let cartItemsUpdated = state.cartItems.filter(
-                    (item) => !item.idDrink === idDrink
+                    (item) => item.idDrink !== idDrink
                 );
 
                 return {

@@ -16,8 +16,8 @@ function CartProvider({ children }) {
         dispatch({ type: actionTypes.REMOVE_ONE_FROM_CART, payload: { idDrink } })
     }
 
-    function removeAllFromCart() {
-        dispatch({ type: actionTypes.REMOVE_ALL_FROM_CART, payload: { idDrink } })
+    function removeAllFromCart(idDrink) {
+        dispatch({ type: actionTypes.REMOVE_ALL_FROM_CART, payload: { idDrink } });
     }
 
     function clearCart() {
