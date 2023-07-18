@@ -11,15 +11,21 @@ function CartProvider({ children }) {
     function addToCart(drink) {
         dispatch({ type: actionTypes.ADD_TO_CART, payload: drink })
     }
+
     function removeOneFromCart(idDrink) {
         dispatch({ type: actionTypes.REMOVE_ONE_FROM_CART, payload: { idDrink } })
     }
+
     function removeAllFromCart() {
         dispatch({ type: actionTypes.REMOVE_ALL_FROM_CART, payload: { idDrink } })
-
     }
+
     function clearCart() {
         dispatch({ type: actionTypes.CLEAR_CART })
+    }
+
+    function sendOrder() {
+        alert(JSON.stringify(state))
     }
 
     const cartValues = {
@@ -27,7 +33,8 @@ function CartProvider({ children }) {
         addToCart,
         removeOneFromCart, 
         removeAllFromCart,
-        clearCart
+        clearCart,
+        sendOrder
     }
     return (
         <CartContext.Provider value={cartValues}>

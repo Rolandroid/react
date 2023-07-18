@@ -13,7 +13,9 @@ export default function CartModal() {
         addToCart,
         removeOneFromCart,
         removeAllFromCart,
-        clearCart } = useCart()
+        clearCart,
+        sendOrder
+     } = useCart()
 
     if (isOpen)
         return (
@@ -26,15 +28,21 @@ export default function CartModal() {
                             {
                                 cart.cartItems.map((drink) => (
                                     <article key= {drink.idDrink} className={style.card}>
-                                        <img src={drink.strDrinkThumb} alt="" />
+                                        <img 
+                                        src={drink.strDrinkThumb}
+                                         alt="" 
+                                         />
                                         <span>{drink.strDrink}</span>
                                         <span>{drink.price}</span>
                                         <div className={style.counter}>
-                                            <button>+</button>
+                                            <button onClick={() => removeOneFromCart(drink.idDrink)}>-</button>
                                             <span>{drink.quantity}</span>
-                                            <button>-</button>
+                                            <button onClick={()=>addToCart(drink)}>+</button>
                                         </div>
-                                        <FontAwesomeIcon icon={faTrashCan} className={style.iconTrash}></FontAwesomeIcon>
+                                        <FontAwesomeIcon
+                                         icon={faTrashCan}
+                                         className={style.iconTrash}
+                                         onClick={()=> removeAllFromCart(drink.idDrink)}/>
                                     </article>
                                 ))
                           }
@@ -44,8 +52,8 @@ export default function CartModal() {
                             <p>Subtotal:xxxx</p>
                             <p>Total:xxxx</p>
                             <div className={StyleSheet.btnContainer}>
-                                <button className={style.clearCart}>Vaciar compra</button>
-                                <button className={style.confirmOrder}>Confirmar compra</button>
+                                <button className={style.clearCart} onClick={clearCart}>Vaciar compra</button>
+                                <button className={style.confirmOrder} onClick={sendOrder}>Confirmar compra</button>
                             </div>
 
                         </aside>
