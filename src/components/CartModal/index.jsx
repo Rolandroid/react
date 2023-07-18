@@ -1,8 +1,9 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTrashCan, faXmark, faXmarkCircle } from "@fortawesome/free-solid-svg-icons"
+import { faXmark, faXmarkCircle } from "@fortawesome/free-solid-svg-icons"
 import style from "./CartModal.module.css"
 import useModal from "../../hooks/useModal";
 import { useCart } from "../../hooks/useCart";
+import { ModalCard } from "./components/Card";
 
 
 
@@ -10,11 +11,9 @@ export default function CartModal() {
     const { isOpen, toogleModal } = useModal()
     const {
         cart,
-        addToCart,
-        removeOneFromCart,
-        removeAllFromCart,
         clearCart,
-        sendOrder
+        sendOrder,
+        orderTotal
      } = useCart()
 
     if (isOpen)
@@ -25,32 +24,16 @@ export default function CartModal() {
                     <h2>Mi carrito</h2>
                     <section className={style.modalBody}>
                         <div className={style.modalDrinksListContainer}>
-                            {
-                                cart.cartItems.map((drink) => (
-                                    <article key= {drink.idDrink} className={style.card}>
-                                        <img 
-                                        src={drink.strDrinkThumb}
-                                         alt="" 
-                                         />
-                                        <span>{drink.strDrink}</span>
-                                        <span>{drink.price}</span>
-                                        <div className={style.counter}>
-                                            <button onClick={() => removeOneFromCart(drink.idDrink)}>-</button>
-                                            <span>{drink.quantity}</span>
-                                            <button onClick={()=>addToCart(drink)}>+</button>
-                                        </div>
-                                        <FontAwesomeIcon
-                                         icon={faTrashCan}
-                                         className={style.iconTrash}
-                                         onClick={()=> removeAllFromCart(drink.idDrink)}/>
-                                    </article>
-                                ))
-                          }
+                            {cart.cartItems.length === 0 && (
+                                <h3>No hay productos en el carrito</h3>
+                            )}
+                            {cart.cartItems.map((drink) => (
+                                    <ModalCard key={drink.idDrink} drink={drink}></ModalCard>
+                                ))}
 
                         </div>
                         <aside>
-                            <p>Subtotal:xxxx</p>
-                            <p>Total:xxxx</p>
+                            <p>Total:{orderTotal}</p>
                             <div className={StyleSheet.btnContainer}>
                                 <button className={style.clearCart} onClick={clearCart}>Vaciar compra</button>
                                 <button className={style.confirmOrder} onClick={sendOrder}>Confirmar compra</button>

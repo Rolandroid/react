@@ -1,12 +1,21 @@
-import { createContext, useReducer } from 'react';
+import { createContext, useEffect, useReducer, useState } from 'react';
 import PropTypes from "prop-types"
 import { actionTypes } from '../actions/cart.action';
 import { cartInitialState, cartReducer } from '../reducers/cart.reducer';
+import { getTotalPriceItems } from '../utils/cart.utils';
 
 const CartContext = createContext()
 
 function CartProvider({ children }) {
     const [state, dispatch] = useReducer(cartReducer, cartInitialState)
+    const [orderTotal, setOrderTotal] = useState(0)
+
+    useEffect(()=>{
+        //Obtener el valor total de cada grupo de productosen el carrito
+            let total = getTotalPriceItems(state.cartItems).reduce((a, b) => a + b, 0)
+        setOrderTotal(total) 
+
+    },[state] )
 
     function addToCart(drink) {
         dispatch({ type: actionTypes.ADD_TO_CART, payload: drink })
@@ -22,6 +31,7 @@ function CartProvider({ children }) {
 
     function clearCart() {
         dispatch({ type: actionTypes.CLEAR_CART })
+        setOrderTotal(0)
     }
 
     function sendOrder() {
@@ -34,7 +44,8 @@ function CartProvider({ children }) {
         removeOneFromCart, 
         removeAllFromCart,
         clearCart,
-        sendOrder
+        sendOrder,
+        orderTotal
     }
     return (
         <CartContext.Provider value={cartValues}>
