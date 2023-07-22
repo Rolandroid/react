@@ -2,9 +2,6 @@ import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
-import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
@@ -13,6 +10,8 @@ import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Copyright from '../Copyright';
 import { Formik, validateYupSchema } from 'formik';
+import { Link } from 'react-router-dom';
+import { useAuth } from '../../../hooks/useAuth';
 
 
 
@@ -21,6 +20,7 @@ import { Formik, validateYupSchema } from 'formik';
 const defaultTheme = createTheme();
 
 export default function SignIn() {
+    const { login } = useAuth()
 
     return (
         <ThemeProvider theme={defaultTheme}>
@@ -43,8 +43,8 @@ export default function SignIn() {
 
                     <Formik
                         initialValues={{
-                            name: [],
-                            password: [],
+                            password: "",
+                            email: "",
                         }}
                         validate={(values) => {
                             const errors = {};
@@ -56,16 +56,16 @@ export default function SignIn() {
                                 errors.email = "Email inválido";
                             }
 
-                            if (!values.name) {
-                                errors.name = "Nombre requerido"
+                            if (!values.password) {
+                                errors.password = "contraseña requerido"
                             }
 
                             return errors;
                         }}
-                        onSubmit={(values, { setSubmiting }) => {
-                            console.log(values)
+                        onSubmit={(values) => {
+                            login(values)
 
-                            setSubmiting(false)
+                        
                         }}
 
                     >
@@ -80,20 +80,6 @@ export default function SignIn() {
                                 isSubmitting
                             }) => (
                                 <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
-                                    <TextField
-                                        margin="normal"
-                                        fullWidth
-                                        name="name"
-                                        label="Nombre"
-                                        type="text"
-                                        id="name" 
-                                        autoFocus
-                                        values={values.name}
-                                        error={errors.name && touched.name}
-                                        onChange = {handleChange}
-                                        onBlur={handleBlur}
-                                        helperText={errors.name && touched.name && errors.name}
-                                    />
 
                                     <TextField
                                         margin="normal"
@@ -109,6 +95,20 @@ export default function SignIn() {
                                         helperText={errors.email && touched.email && errors.email}
                                     />
 
+                                    <TextField
+                                        margin="normal"
+                                        fullWidth
+                                        name="password"
+                                        label="Nombre"
+                                        type="password"
+                                        id="password" 
+                                        autoFocus
+                                        values={values.password}
+                                        error={errors.password && touched.password}
+                                        onChange = {handleChange}
+                                        onBlur={handleBlur}
+                                        helperText={errors.password && touched.password && errors.password}
+                                    />
                                     <Button
                                         type="submit"
                                         fullWidth
@@ -120,7 +120,7 @@ export default function SignIn() {
                                     <Grid container>
                                         
                                         <Grid item>
-                                            <Link href="#" variant="body2">
+                                            <Link to="#" variant="body2">
                                                 {"Don't have an account? Sign Up"}
                                             </Link>
                                         </Grid>
