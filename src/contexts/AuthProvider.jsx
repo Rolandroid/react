@@ -39,7 +39,7 @@ function AuthProvider({ children }) {
                     return Promise.reject(res)
                 }
             })
-            .catch(error => alert(JSON.stringify(error + " AuthProvider43")))
+            .catch(error => alert(JSON.stringify(error + " AuthProvider42")))
     }
 
     function login(data) {

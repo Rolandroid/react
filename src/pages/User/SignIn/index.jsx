@@ -99,7 +99,7 @@ export default function SignIn() {
                                         margin="normal"
                                         fullWidth
                                         name="password"
-                                        label="Nombre"
+                                        label="Contraseña"
                                         type="password"
                                         id="password" 
                                         autoFocus
